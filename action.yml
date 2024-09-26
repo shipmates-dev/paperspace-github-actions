@@ -1,0 +1,22 @@
+name: 'Paperspace VM Control'
+description: 'A GitHub Action to start and stop Paperspace VMs'
+author: 'Jean Simon Otis <js@shipmates.dev>'
+inputs:
+  api_key:
+    description: 'Paperspace API key'
+    required: true
+  machine_id:
+    description: 'Paperspace Machine ID'
+    required: true
+  action:
+    description: 'Action to perform: start or stop the VM'
+    required: true
+    default: 'start'
+
+runs:
+  using: 'node20'
+  main: 'index.js'
+
+branding:
+  icon: 'server'
+  color: 'blue'

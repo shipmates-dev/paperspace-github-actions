@@ -1,0 +1,15 @@
+{
+    "name": "paperspace-vm-control",
+    "version": "1.0.0",
+    "description": "A GitHub Action to start and stop Paperspace VMs",
+    "main": "index.js",
+    "dependencies": {
+        "@actions/core": "^1.10.1",
+        "axios": "^1.7.5"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Jean Simon Otis",
+    "license": "ISC"
+}
