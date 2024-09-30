@@ -71,14 +71,38 @@ async function getStatus() {
     }
 }
 
+async function getWorkflowId(repo, token, workflowName) {
+    const response = await axios.get(`https://api.github.com/repos/${repo}/actions/workflows`, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/vnd.github+json'
+        }
+    });
+
+    if (response.status !== 200) {
+        throw new Error(`Failed to list workflows: ${response.statusText}`);
+    }
+
+    const workflows = response.data.workflows;
+    const workflow = workflows.find(wf => wf.name === workflowName);
+
+    if (!workflow) {
+        throw new Error(`Workflow with name "${workflowName}" not found.`);
+    }
+
+    return workflow.id;
+}
+
 async function handleStop() {
     const token = core.getInput('github_token');
-    const workflow = process.env.GITHUB_WORKFLOW;
+    const workflowName = process.env.GITHUB_WORKFLOW;
     const repo = process.env.GITHUB_REPOSITORY;
 
-    core.info(`Checking if another workflow is queued for execution in ${repo} with workflow ${workflow}`);
+    var workflowId = await getWorkflowId(repo, token, workflowName);
 
-    const response = await axios.get(`https://api.github.com/repos/${repo}/actions/workflows/${workflow}/runs?status=queued`, {
+    core.info(`Checking if another workflow is queued for execution in ${repo} with workflow ${workflowId}`);
+
+    const response = await axios.get(`https://api.github.com/repos/${repo}/actions/workflows/${workflowId}/runs?status=queued`, {
         headers: {
             'Authorization': `Bearer ${token}`,
             "Accept" : "application/vnd.github+json",
