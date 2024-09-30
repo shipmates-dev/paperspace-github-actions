@@ -34034,8 +34034,8 @@ async function handleStop() {
         throw new Error(`Error getting a list of queued workflows`);
     }
 
-    if (response.data.total_count > 0) {
-        core.info(`Not stopping VM as another workflow with that VM is queued for execution ${response.data.total_count} ${JSON.stringify(response.data)}`);
+    if (response.data.workflow_runs.length > 0) {
+        core.info(`Not stopping VM as another workflow with that VM is queued for execution`);
         return;
     }
 
