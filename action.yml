@@ -12,6 +12,10 @@ inputs:
     description: 'Action to perform: start or stop the VM'
     required: true
     default: 'start'
+  github_token:
+    description: 'Github token for stop action'
+    required: false
+    default: ''
 
 runs:
 
