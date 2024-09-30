@@ -14,8 +14,9 @@ inputs:
     default: 'start'
 
 runs:
+
   using: 'node20'
-  main: 'index.js'
+  main: 'dist/index.js'
 
 branding:
   icon: 'server'
