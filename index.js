@@ -116,6 +116,10 @@ async function handleStop() {
 
     if (response.data.total_count > 0) {
         core.info("Not stopping VM as another workflow with that VM is queued for execution");
+
+        response.data.workflow_runs.forEach(element => {
+            core.info(`Workflow run ID: ${element.id} - Status: ${element.status} - Name: ${element.name}`);
+        });
         return;
     }
 
