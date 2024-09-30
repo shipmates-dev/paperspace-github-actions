@@ -21,7 +21,7 @@ async function run() {
             core.setFailed(`Invalid action: ${action}`);
     }
   } catch (error) {
-    core.setFailed(`Action failed: ${error.message}`);
+    core.setFailed(`Action failed: ${error.message}\n${error.stack}`);
   }
 }
 
@@ -75,6 +75,8 @@ async function handleStop() {
     const token = core.getInput('github_token');
     const workflow = process.env.GITHUB_WORKFLOW;
     const repo = process.env.GITHUB_REPOSITORY;
+
+    core.info(`Checking if another workflow is queued for execution in ${repo} with workflow ${workflow}`);
 
     const response = await axios.get(`https://api.github.com/repos/${repo}/actions/workflows/${workflow}/runs?status=queued`, {
         headers: {
